@@ -316,9 +316,15 @@ private:
                         if (memcmp(" HTTP/1.1\r\n", data, std::min<unsigned int>(11, (unsigned int) (end - data))) == 0) {
                             return nullptr;
                         }
+                        if (memcmp(" HTTP/1.0\r\n", data, std::min<unsigned int>(11, (unsigned int) (end - data))) == 0) {
+                            return nullptr;
+                        }
                         return (char *) 0x1;
                     }
                     if (memcmp(" HTTP/1.1\r\n", data, 11) == 0) {
+                        return data + 11;
+                    }
+                    if (memcmp(" HTTP/1.0\r\n", data, 11) == 0) {
                         return data + 11;
                     }
                     /* If we stand at the post padded CR, we have fragmented input so try again later */
